@@ -2,6 +2,20 @@ import { CeramicClient } from '@ceramicnetwork/http-client'
 import { EthereumAuthProvider } from '@ceramicnetwork/blockchain-utils-linking'
 import { DIDDataStore } from '@glazed/did-datastore'
 import { DIDSession } from '@glazed/did-session'
+import { createApp } from 'vue'
+import App from './App.vue'
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import {
+  applyPolyfills,
+  defineCustomElements,
+} from '@aws-amplify/ui-components/loader';
+
+Amplify.configure(aws_exports);
+applyPolyfills().then(() => {
+  defineCustomElements(window);
+});
+
 
 const profileForm = document.getElementById('profileForm')
 const walletBtn = document.getElementById('walletBtn')
@@ -126,3 +140,4 @@ profileForm.addEventListener('submit', async (e) => {
     await updateProfileOnCeramic()
 
 })
+createApp(App).mount('#app')
